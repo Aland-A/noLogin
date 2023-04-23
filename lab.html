@@ -6,7 +6,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Upload | NOLOGIN</title>
+    <title>Lab | NOLOGIN</title>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
     <script>
@@ -27,53 +27,52 @@
       firebase.initializeApp(firebaseConfig);
       var database = firebase.database();
 
-      function writeToDatabase() {
-        var key = document.getElementById("key").value;
-        var value = document.getElementById("value").value;
+      function readFromDatabase() {
+        var key = "lab";
 
         if (key === "") alert("You must provide a key.");
-        else if (value === "") alert("You must provide a text to upload.");
-        else if (key === "" && value === "") alert("You must fill both forms.");
-        else if (key === "lab") database.ref(key).set(value);
         else {
-          checkIfKeyExists(key, value);
+          database
+            .ref(key)
+            .once("value")
+            .then(function (snapshot) {
+              var value = snapshot.val();
+              document.getElementById("value").value = value;
+            });
         }
       }
 
-      // This function decides if the key and value should be stored in the database, and it stores it itself.
-      function checkIfKeyExists(key, value) {
-        var ref = firebase.database().ref(key);
-        ref.once("value", function (snapshot) {
-          if (snapshot.exists()) {
-            alert("This key is already in use. Please choose another key.");
-          } else {
-            alert("Data written to database.");
-            database.ref(key).set(value);
-          }
-        });
+      function copyText() {
+        var value = document.getElementById("value").value;
+        navigator.clipboard
+          .writeText(value)
+          .then(() => {
+            console.log(`Copied ${value} to clipboard`);
+          })
+          .catch((error) => {
+            console.error(`Could not copy text: ${error}`);
+          });
       }
+      window.onload = function () {
+        readFromDatabase();
+      };
+
+      fin;
     </script>
   </head>
+
   <body class="patterns pt1">
     <center>
-      <h1 class="title">Upload text</h1>
+      <h1 class="title">Database Lab</h1>
       <div class="devName">Developed By Aland Ameer Qader</div>
-      <div class="keyDiv">
-        <label for="key" class="formLabel">Enter Key</label>
-        <input type="text" id="key" name="key" /><br /><br />
-      </div>
 
-      <div class="valueDiv">
-        <div class="valueLabelDiv">
-          <label for="value" class="formLabel2">Enter text</label>
-        </div>
+      <button onclick="copyText()" class="myButton2">Copy Code</button>
 
+      <div class="valueDiv2">
         <div class="valueFormDiv">
           <textarea type="text" id="value" name="value"></textarea><br /><br />
         </div>
       </div>
-
-      <button onclick="writeToDatabase()" class="myButton">Upload</button>
     </center>
   </body>
 </html>
