@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Upload | NOLOGIN</title>
+  </head>
+  <body class="patterns pt1">
+    <center>
+      <h1 class="title">Upload File</h1>
+      <div class="devName">Developed By Aland Ameer Qader</div>
+      <div class="keyDiv">
+        <label for="key" class="formLabel">Enter Key</label>
+        <input type="text" id="key" name="key" /><br /><br />
+      </div>
+
+      <form style="position: relative; top: 25px; size: 100px">
+        <input type="file" id="fileButton" />
+      </form>
+
+      <button onclick="uploadFile()" class="myButton">Upload</button>
+    </center>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-database.js"></script>
+
+    <script>
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBCr4jJyHOwNuQ4GBpKXRRx5RQ7uT4haSc",
+        authDomain: "mydb-7a16c.firebaseapp.com",
+        databaseURL:
+          "https://mydb-7a16c-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "mydb-7a16c",
+        storageBucket: "mydb-7a16c.appspot.com",
+        messagingSenderId: "60788192817",
+        appId: "1:60788192817:web:e079f8cd56494456950710",
+        measurementId: "G-VJBTXFV13X",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Upload file to Firebase Storage and associate it with the entered key
+      function uploadFile() {
+        let key = document.getElementById("key").value;
+        let file = document.getElementById("fileButton").files[0];
+
+        if (!key) {
+          alert("Please enter a key!");
+          return;
+        }
+
+        if (!file) {
+          alert("Please select a file!");
+          return;
+        }
+
+        let storageRef = firebase.storage().ref(`uploads/${key}.zip`);
+        let metadata = {
+          contentType: file.type,
+        };
+        let uploadTask = storageRef.put(file, metadata);
+
+        uploadTask.on(
+          "state_changed",
+          function (snapshot) {
+            // Handle progress
+          },
+          function (error) {
+            console.error(error);
+            alert("An error occurred while uploading the file!");
+          },
+          function () {
+            // File uploaded successfully
+            alert("File uploaded successfully!");
+          }
+        );
+
+        // Associate the key with the file download URL in Firebase Realtime Database
+        let databaseRef = firebase.database().ref(`uploads/${key}`);
+        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          databaseRef.set({
+            downloadURL: downloadURL,
+            fileName: file.name,
+            fileType: file.type,
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
