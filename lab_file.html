@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Retrieve | NOLOGIN</title>
+  </head>
+  <body class="patterns pt1">
+    <center>
+      <h1 class="title">Lab File</h1>
+      <div class="devName">Developed By Aland Ameer Qader</div>
+
+      <button onclick="retrieveFile()" class="myButton2">
+        Download Latest Lab File
+      </button>
+    </center>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-database.js"></script>
+    <script>
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBCr4jJyHOwNuQ4GBpKXRRx5RQ7uT4haSc",
+        authDomain: "mydb-7a16c.firebaseapp.com",
+        databaseURL:
+          "https://mydb-7a16c-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "mydb-7a16c",
+        storageBucket: "mydb-7a16c.appspot.com",
+        messagingSenderId: "60788192817",
+        appId: "1:60788192817:web:e079f8cd56494456950710",
+        measurementId: "G-VJBTXFV13X",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      function retrieveFile() {
+        const key = "lab.zip";
+        const storageRef = firebase
+          .storage()
+          .ref()
+          .child("uploads/" + key);
+
+        // Get the download URL of the file
+        storageRef
+          .getDownloadURL()
+          .then((url) => {
+            openLinkInNewTab(url);
+          })
+          .catch((error) => {
+            console.error("Error retrieving file:", error);
+          });
+      }
+
+      function openLinkInNewTab(url) {
+        window.open(url, "_blank");
+      }
+    </script>
+  </body>
+</html>
