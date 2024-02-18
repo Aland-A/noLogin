@@ -177,6 +177,27 @@ body {
   top: 20px;
 }
 
+#random-button { 
+  border-radius: 5px;
+  font-size: 16px;
+  height: 40px;
+  line-height: 24px;
+  position: relative;
+  right: 50px;
+  top: 20px;
+  margin-left: 15px;
+  transition-duration: 0.15s;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The following code adds a hover effect to random-button to make it black. It is a smooth transition from white to black*/
+#random-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+
 #key:focus {
   background-color: #fff;
   border-color: #3b49df;
@@ -245,7 +266,6 @@ body {
 }
 
 .myButton2 {
-  position: relative;
   top: 100px;
   display: inline-block;
   outline: 0;
