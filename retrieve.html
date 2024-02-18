@@ -44,6 +44,23 @@
       }
 
       fin;
+
+      function copyContent() {
+        // Get the textarea element
+        var textarea = document.getElementById("value");
+
+        // Select the contents of the textarea
+        textarea.select();
+
+        // Copy the selected text
+        document.execCommand("copy");
+
+        // Deselect the text
+        textarea.setSelectionRange(0, 0);
+
+        // Optionally, provide feedback to the user
+        alert("Text has been copied to clipboard!");
+      }
     </script>
   </head>
   <body class="patterns pt1">
@@ -62,6 +79,7 @@
         <div class="valueFormDiv">
           <textarea readonly type="text" id="value" name="value"></textarea
           ><br /><br />
+          <button onclick="copyContent()" class="myButton2">Copy text</button>
         </div>
       </div>
     </center>
