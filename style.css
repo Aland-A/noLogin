@@ -275,10 +275,10 @@ body {
 }
 
 textarea {
-  width: 1000px;
+  width: 1200px;
   height: 500px;
   padding: 10px;
-  font-size: 25px;
+  font-size: 20px;
   font-family: Arial, sans-serif;
   border-radius: 5px;
   border: 1px solid lightgray;
