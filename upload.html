@@ -54,6 +54,17 @@
           }
         });
       }
+
+      function generateRandomString() {
+        const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
+        for (let i = 0; i < 8; i++) {
+          result += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          );
+        }
+        document.getElementById("key").value = result;
+      }
     </script>
   </head>
   <body class="patterns pt1">
@@ -62,7 +73,14 @@
       <div class="devName">Developed By Aland Ameer Qader</div>
       <div class="keyDiv">
         <label for="key" class="formLabel">Enter Key</label>
-        <input type="text" id="key" name="key" /><br /><br />
+        <input type="text" id="key" name="key" />
+        <input
+          onclick="generateRandomString()"
+          type="button"
+          id="random-button"
+          value="Random key"
+        />
+        <br /><br />
       </div>
 
       <div class="valueDiv">
