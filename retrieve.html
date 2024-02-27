@@ -43,8 +43,6 @@
         }
       }
 
-      fin;
-
       function copyContent() {
         // Get the textarea element
         var textarea = document.getElementById("value");
@@ -61,6 +59,19 @@
         // Optionally, provide feedback to the user
         alert("Text has been copied to clipboard!");
       }
+
+      // This function allows the user to press the Enter key to submit the form.
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("key")
+          .addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+              event.preventDefault();
+              document.getElementById("retrieve-button").click();
+              console.log("Enter key pressed.");
+            }
+          });
+      });
     </script>
   </head>
   <body class="patterns pt1">
@@ -73,7 +84,13 @@
         <input type="text" id="key" name="key" /><br /><br />
       </div>
 
-      <button onclick="readFromDatabase()" class="myButton2">Retrieve</button>
+      <button
+        onclick="readFromDatabase()"
+        class="myButton2"
+        id="retrieve-button"
+      >
+        Retrieve
+      </button>
 
       <div class="valueDiv2">
         <div class="valueFormDiv">
