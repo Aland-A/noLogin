@@ -28,6 +28,9 @@
       var database = firebase.database();
 
       function readFromDatabase() {
+        // Add overlay until data is fetched
+        addOverlay();
+
         var key = document.getElementById("key").value;
 
         if (key === "") alert("You must provide a key.");
@@ -41,6 +44,22 @@
               console.log("Data read from database.");
             });
         }
+
+        // Remove overlay.
+        removeOverlay();
+      }
+
+      // This function will add an overlay temporerily to indicate that the data is being retrieved.
+      function addOverlay() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "block";
+        console.log("Overlay added.");
+      }
+
+      // THis function will remove the overlay.
+      function removeOverlay() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "none";
       }
 
       function copyContent() {
@@ -100,5 +119,20 @@
         </div>
       </div>
     </center>
+
+    <div id="overlay">
+      <div class="center">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+      </div>
+    </div>
   </body>
 </html>

@@ -44,6 +44,9 @@
       firebase.initializeApp(firebaseConfig);
 
       function retrieveFile() {
+        // Add overlay until data is fetched
+        addOverlay();
+
         const key = document.getElementById("key").value + ".zip";
         const storageRef = firebase
           .storage()
@@ -59,6 +62,9 @@
           .catch((error) => {
             console.error("Error retrieving file:", error);
           });
+
+        // Remove overlay.
+        removeOverlay();
       }
 
       function openLinkInNewTab(url) {
@@ -77,6 +83,19 @@
             }
           });
       });
+
+      // This function will add an overlay temporerily to indicate that the data is being retrieved.
+      function addOverlay() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "block";
+        console.log("Overlay added.");
+      }
+
+      // THis function will remove the overlay.
+      function removeOverlay() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "none";
+      }
     </script>
   </body>
 </html>
