@@ -44,9 +44,6 @@
       firebase.initializeApp(firebaseConfig);
 
       function retrieveFile() {
-        // Add overlay until data is fetched
-        addOverlay();
-
         const key = document.getElementById("key").value + ".zip";
         const storageRef = firebase
           .storage()
